@@ -1,6 +1,6 @@
 version: "2"
 services:
-  requisition-ui:
+  ui-layout:
     image: openlmis/dev-ui:latest
     ports:
       - "9000:9000"
@@ -8,7 +8,20 @@ services:
     working_dir: /app
     volumes:
       - '.:/app'
-    env_file: .env
+    volumes_from:
+      - auth-ui
+      - ui-components
+    depends_on:
+      - auth-ui
+      - ui-components
+  auth-ui:
+    image: openlmis/auth-ui:latest
+    volumes:
+      - '/openlmis-auth-ui'
+  ui-components:
+    image: openlmis/ui-components:latest
+    volumes:
+      - '/openlmis-ui-components'
   image:
     build: .
-    image: openlmis/requisition-ui
+    image: openlmis/ui-layout
