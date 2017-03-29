@@ -1,9 +1,11 @@
 {
-    "app": {
-        "src": "./src"
-    },
-    "orderedBuildDirectories": [
-      "/openlmis-ui-components",
-      "/openlmis-auth-ui"
-    ]
+  "app": {
+      "src": "./src"
+  },
+  "orderedBuildDirectories": [
+    "/openlmis-ui-components",
+    "/openlmis-auth-ui"
+  ],
+  "transifexProjectName": "openlmis-ui-layout",
+  "defaultLanguage": "en"
 }
