@@ -19,15 +19,17 @@
 
     angular.module('openlmis-404').config(routes);
 
-    routes.$inject = ['$stateProvider'];
+    routes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function routes($stateProvider) {
+    function routes($stateProvider, $urlRouterProvider) {
 
         $stateProvider.state('404', {
             isOffline: true,
             url: '/404',
             templateUrl: 'openlmis-404/404.html'
         });
+
+        $urlRouterProvider.otherwise('/404');
 
     }
 
