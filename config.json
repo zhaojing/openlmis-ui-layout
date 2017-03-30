@@ -6,6 +6,8 @@
     "/openlmis-ui-components",
     "/openlmis-auth-ui"
   ],
+  "applicationTitle": "OpenLMIS",
+  "applicationLoadingMessage": "Starting OpenLMIS",
   "transifexProjectName": "openlmis-ui-layout",
   "defaultLanguage": "en"
 }
