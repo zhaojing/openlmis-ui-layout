@@ -12,31 +12,22 @@
  * the GNU Affero General Public License along with this program. If not, see
  * http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
  */
-
 (function() {
 
     'use strict';
 
     angular
-        .module('openlmis-home')
+        .module('openlmis-main-state')
         .config(routes);
 
-    routes.$inject = ['$stateProvider', '$urlRouterProvider'];
+    routes.$inject = ['$stateProvider'];
 
-    function routes($stateProvider, $urlRouterProvider) {
+    function routes($stateProvider) {
 
-        $stateProvider.state('openlmis.home', {
-            url: '/home',
-            templateUrl: 'openlmis-home/home.html',
-            priority: 3,
-            showInNavigation: true,
-            label: 'link.home',
+        $stateProvider.state('openlmis', {
+            templateUrl: 'openlmis-main-state/main-state.html',
             isOffline: true
         });
-
-        $urlRouterProvider
-        .when('', '/home')
-        .when('/', '/home');
 
     }
 
