@@ -52,7 +52,7 @@
         $scope.logout = function() {
             loginService.logout()
                 .then(function() {
-                    $state.go('openlmis.auth.login');
+                    $state.go('auth.login');
                 });
         };
 

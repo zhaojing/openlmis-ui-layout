@@ -25,7 +25,7 @@
 
     function routes($stateProvider, $urlRouterProvider) {
 
-        $stateProvider.state('openlmis.home', {
+        $stateProvider.state('home', {
             url: '/home',
             templateUrl: 'openlmis-home/home.html',
             priority: 3,
