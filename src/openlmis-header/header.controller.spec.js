@@ -14,36 +14,52 @@
  */
 
 describe('HeaderController', function() {
-    beforeEach(module('openlmis-header'));
 
-    var scope, window, localStorageService, httpBackend, $state;
+    var scope, vm, authorizationService, offlineService, user1, user2;
 
-    beforeEach(inject(function($rootScope, $controller, _localStorageService_, _$httpBackend_, _$state_, loginService, $q) {
-        $state = _$state_;
-        spyOn($state, 'go');
+    beforeEach(function() {
+       module('openlmis-header');
 
-        httpBackend = _$httpBackend_;
-        scope = $rootScope.$new();
-        window = {};
-        localStorageService = _localStorageService_;
-        access_token = '4b06a35c-9684-4f8c-b9d0-ce2c6cd685de';
-        spyOn(localStorageService, 'get').andReturn(access_token);
-        spyOn(localStorageService, 'remove');
-        $controller('HeaderController', {
-            $scope: scope,
-            localStorageService: localStorageService,
-            $window: window
+       inject(function($controller, $rootScope, _authorizationService_, _offlineService_) {
+           authorizationService = jasmine.createSpyObj('authorizationService', ['getUser', 'isAuthenticated']);
+           offlineService = _offlineService_;
+           scope = $rootScope.$new();
+           vm = $controller('HeaderController', {
+               $scope: scope,
+               authorizationService: authorizationService,
+               offlineService: offlineService
+           });
+       });
+
+       user1 = {
+           user_id: '1',
+           username: 'user1'
+       };
+       user2 = {
+           user_id: '2',
+           username: 'user2'
+       };
+
+       authorizationService.isAuthenticated.andReturn(true);
+       authorizationService.getUser.andReturn(user1);
+       scope.$apply();
+    });
+
+    describe('watch', function() {
+
+        it('should set user information', function() {
+            expect(scope.user).toBe(user1.username);
+            expect(scope.userId).toBe(user1.user_id);
         });
 
-        spyOn(loginService, 'logout').andReturn($q.when());
-    }));
+        it('should update user information', function() {
+            authorizationService.getUser.andReturn(user2);
+            scope.$apply();
 
-    it('should navigate to login page when user logs out', function() {
+            expect(scope.user).toBe(user2.username);
+            expect(scope.userId).toBe(user2.user_id);
+        })
 
-        scope.logout();
-        scope.$apply();
-
-        // Page state is on login page
-        expect($state.go).toHaveBeenCalledWith('auth.login');
     });
+
 });

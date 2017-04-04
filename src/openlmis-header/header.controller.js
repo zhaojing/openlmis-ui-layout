@@ -28,9 +28,10 @@
         .module('openlmis-header')
         .controller('HeaderController', controller);
 
-    controller.$inject = ['$scope', 'authorizationService', 'loginService', '$state', 'offlineService'];
+    controller.$inject = ['$scope', 'authorizationService', 'offlineService'];
 
-    function controller($scope, authorizationService, loginService, $state, offlineService) {
+    function controller($scope, authorizationService, offlineService) {
+        var vm = this;
 
         $scope.$watch(function() {
             return authorizationService.getUser();
@@ -41,22 +42,7 @@
             $scope.hasPermission = authorizationService.hasPermission;
         }, true);
 
-        /**
-         * @ngdoc method
-         * @methodOf openlmis-header.controller:HeaderController
-         * @name logout
-         *
-         * @description
-         * Log outs user from application and redirects to login screen.
-         */
-        $scope.logout = function() {
-            loginService.logout()
-                .then(function() {
-                    $state.go('auth.login');
-                });
-        };
-
-        this.checkConnection = offlineService.checkConnection;
+        vm.checkConnection = offlineService.checkConnection;
     }
 
 })();
