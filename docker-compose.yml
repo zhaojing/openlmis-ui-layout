@@ -24,4 +24,4 @@ services:
       - '/openlmis-ui-components'
   image:
     build: .
-    image: openlmis/ui-layout:4.1.0-SNAPSHOT
+    image: openlmis/ui-layout
