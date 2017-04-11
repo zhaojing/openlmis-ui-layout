@@ -1,8 +1,8 @@
 <div class="user-info">
-    <span>{{ 'home.loggedInAs.label' | message }}</span>&nbsp;<a ui-sref="profile">{{user}}</a>
+    <span>{{ 'openlmisHeader.loggedAs' | message }}</span>&nbsp;<a ui-sref="profile">{{user}}</a>
     <span ng-show="hasPermission('VIEW_HELP')">|
         <a href="/pages/help/helpContent/index.html#/viewDashboard">
-            {{ 'home.help.label' | message }}
+            {{ 'openlmisHeader.help' | message }}
         </a>
     </span>
 </div>
