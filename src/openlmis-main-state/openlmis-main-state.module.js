@@ -12,25 +12,12 @@
  * the GNU Affero General Public License along with this program. If not, see
  * http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
  */
-
 (function() {
 
-    "use strict";
+    'use strict';
 
-    angular.module('openlmis-404').config(routes);
-
-    routes.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-    function routes($stateProvider, $urlRouterProvider) {
-
-        $stateProvider.state('openlmis.404', {
-            isOffline: true,
-            url: '/404',
-            templateUrl: 'openlmis-404/404.html'
-        });
-
-        $urlRouterProvider.otherwise('/404');
-
-    }
+    angular.module('openlmis-main-state', [
+        'ui.router'
+    ]);
 
 })();
