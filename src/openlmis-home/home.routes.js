@@ -27,12 +27,16 @@
 
         $stateProvider.state('openlmis.home', {
             url: '/home',
-            templateUrl: 'openlmis-home/home.html',
             // keep home menu always at the first place
             priority: 999,
             showInNavigation: true,
             label: 'openlmisHome.home',
-            isOffline: true
+            isOffline: true,
+            views: {
+                '@': {
+                    templateUrl: 'openlmis-home/home.html'
+                }
+            }
         });
 
         $urlRouterProvider

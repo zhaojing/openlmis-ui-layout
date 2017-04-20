@@ -14,29 +14,13 @@
  */
 (function() {
 
-    'use strict';
+	'use strict';
 
-    angular
-        .module('openlmis-main-state')
-        .config(routes);
-
-    routes.$inject = ['$stateProvider'];
-
-    function routes($stateProvider) {
-
-        $stateProvider.state('openlmis', {
-            isOffline: true,
-            label: 'Home',
-            views: {
-                '@': {
-                    templateUrl: 'openlmis-main-state/page.html'
-                },
-                header: {
-                    templateUrl: 'openlmis-main-state/header.html'
-                }
-            }
-        });
-
-    }
-
+	angular
+		.module('openlmis-breadcrumbs')
+		.component('openlmisBreadcrumbs', {
+			controller: 'BreadcrumbsController',
+			controllerAs: 'breadcrumbs',
+            templateUrl: 'openlmis-breadcrumbs/openlmis-breadcrumbs.html'
+		});
 })();

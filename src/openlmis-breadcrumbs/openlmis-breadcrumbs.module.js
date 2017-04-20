@@ -16,27 +16,14 @@
 
     'use strict';
 
-    angular
-        .module('openlmis-main-state')
-        .config(routes);
-
-    routes.$inject = ['$stateProvider'];
-
-    function routes($stateProvider) {
-
-        $stateProvider.state('openlmis', {
-            isOffline: true,
-            label: 'Home',
-            views: {
-                '@': {
-                    templateUrl: 'openlmis-main-state/page.html'
-                },
-                header: {
-                    templateUrl: 'openlmis-main-state/header.html'
-                }
-            }
-        });
-
-    }
+    /**
+     * @module openlmis-breadcrumbs
+     *
+     * @description
+     * Provides breadcrumbs to the webapp.
+     */
+    angular.module('openlmis-breadcrumbs', [
+        'ui.router'
+    ]);
 
 })();

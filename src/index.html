@@ -30,14 +30,7 @@
     </head>
     <body class="no-js" onLoad="removeNoJS()" >
         <div class="loading-view">@@APPLICATION_LOADING_MESSAGE</div>
-        <header ng-if="userIsAuthenticated">
-            <ng-include src="'openlmis-header/header.html'"></ng-include>
-            <div class="navbar">
-                <openlmis-navigation root-state="openlmis" class="nav navbar-nav"></openlmis-navigation>
-                <openlmis-logout class="navbar-right"></openlmis-logout>
-                <openlmis-locale class="navbar-right locale-container"></openlmis-locale>
-            </div>
-        </header>
+        <header class="header" ui-view="header" ng-if="userIsAuthenticated"></header>
         <div ui-view></div>
     </body>
 </html>

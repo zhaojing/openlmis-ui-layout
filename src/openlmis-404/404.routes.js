@@ -26,7 +26,11 @@
         $stateProvider.state('openlmis.404', {
             isOffline: true,
             url: '/404',
-            templateUrl: 'openlmis-404/404.html'
+            views: {
+                '@': {
+                    templateUrl: 'openlmis-404/404.html'
+                }
+            }
         });
 
         $urlRouterProvider.otherwise('/404');
