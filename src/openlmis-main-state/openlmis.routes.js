@@ -26,7 +26,7 @@
 
         $stateProvider.state('openlmis', {
             isOffline: true,
-            label: 'Home',
+            label: 'openlmisMainState.home',
             views: {
                 '@': {
                     templateUrl: 'openlmis-main-state/page.html'
