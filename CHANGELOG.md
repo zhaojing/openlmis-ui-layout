@@ -1,3 +1,9 @@
+5.0.1
+==================
+
+Bug fixes:
+* [OLMIS-2428](https://openlmis.atlassian.net/browse/OLMIS-2428): Fixed missing error message for 500 error modal
+
 5.0.0 / 2017-05-08
 ==================
 

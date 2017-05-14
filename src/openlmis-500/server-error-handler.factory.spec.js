@@ -36,22 +36,20 @@ describe('serverErrorHandler', function() {
 
     it('should show modal on 500 error', function() {
         var response = {
-                status: 500,
-                statusText: 'Server error!'
+                status: 500
             };
 
         spyOn($q, 'reject').andCallThrough();
 
         handler.responseError(response);
 
-        expect(alertMock.error).toHaveBeenCalled();
+        expect(alertMock.error).toHaveBeenCalledWith('openlmis500.serverResponse.error');
         expect($q.reject).toHaveBeenCalledWith(response);
     });
 
     it('should not show alert modal when other is shown', function() {
         var response = {
-                status: 500,
-                statusText: 'Server error!'
+                status: 500
             };
 
         spyOn($q, 'reject').andCallThrough();
