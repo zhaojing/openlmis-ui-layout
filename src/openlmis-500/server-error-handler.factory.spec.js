@@ -34,7 +34,7 @@ describe('serverErrorHandler', function() {
         });
     });
 
-    it('should show modal on 500 error', function() {
+    it('should show modal with default message on 500 error', function() {
         var response = {
                 status: 500
             };
@@ -44,6 +44,20 @@ describe('serverErrorHandler', function() {
         handler.responseError(response);
 
         expect(alertMock.error).toHaveBeenCalledWith('openlmis500.serverResponse.error');
+        expect($q.reject).toHaveBeenCalledWith(response);
+    });
+
+    it('should show modal with message from response on 500 error', function() {
+        var response = {
+                status: 500,
+                statusText: 'Server Error!'
+            };
+
+        spyOn($q, 'reject').andCallThrough();
+
+        handler.responseError(response);
+
+        expect(alertMock.error).toHaveBeenCalledWith('Server Error!');
         expect($q.reject).toHaveBeenCalledWith(response);
     });
 
