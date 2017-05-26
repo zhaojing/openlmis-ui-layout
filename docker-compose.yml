@@ -1,7 +1,7 @@
 version: "2"
 services:
   ui-layout:
-    image: openlmis/dev-ui:3-SNAPSHOT
+    image: openlmis/dev-ui:3
     ports:
       - "9000:9000"
       - "9876:9876"
@@ -15,11 +15,11 @@ services:
       - auth-ui
       - ui-components
   auth-ui:
-    image: openlmis/auth-ui:5.0.1-SNAPSHOT
+    image: openlmis/auth-ui:5.0.1
     volumes:
       - '/openlmis-auth-ui'
   ui-components:
-    image: openlmis/ui-components:5.0.1-SNAPSHOT
+    image: openlmis/ui-components:5.0.1
     volumes:
       - '/openlmis-ui-components'
   image:
