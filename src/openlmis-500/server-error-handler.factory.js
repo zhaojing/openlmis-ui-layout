@@ -53,7 +53,10 @@
             if(response.status >= 500 && canDisplayModal) {
                 var errorMessage = response.statusText ? response.statusText : 'openlmis500.serverResponse.error';
                 canDisplayModal = false;
-                $injector.get('alertService').error(errorMessage).then(function() {
+                $injector.get('alertService').showResponse(
+                    response,
+                    errorMessage
+                ).then(function() {
                     canDisplayModal = true;
                 });
             }
