@@ -18,7 +18,7 @@
     'use strict';
 
     angular
-        .module('openlmis-500')
+        .module('openlmis-server-error-handler')
         .config(config);
 
     config.$inject = ['$httpProvider'];

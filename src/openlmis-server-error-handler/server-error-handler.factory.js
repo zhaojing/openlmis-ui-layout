@@ -20,44 +20,49 @@
 
     /**
      * @ngdoc service
-     * @name openlmis-500.serverErrorHandler
+     * @name openlmis-server-error-handler.serverErrorHandler
      *
-     * @description Displays alert modal when server response status has 5XX code.
+     * @description Displays alert modal when server response status has 4XX or 5XX code.
      */
     angular
-        .module('openlmis-500')
+        .module('openlmis-server-error-handler')
         .factory('serverErrorHandler', handler);
 
-    handler.$inject = ['$q', '$injector'];
+    handler.$inject = ['$q', '$injector', '$timeout'];
 
-    function handler($q, $injector) {
+    function handler($q, $injector, $timeout) {
 
-        var canDisplayModal = true,
-            provider = {
+        var provider = {
             responseError: responseError
         };
         return provider;
 
         /**
          * @ngdoc method
-         * @methodOf openlmis-500.serverErrorHandler
+         * @methodOf openlmis-server-error-handler.serverErrorHandler
          * @name  responseError
          *
          * @description
-         * Takes a failed response with 5XX code displays alert modal and reject response.
+         * Takes a failed response with 4XX or 5XX code displays alert modal and reject response.
          *
          * @param  {Object}  response HTTP Response
          * @return {Promise}          Rejected promise
          */
         function responseError(response) {
-            if(response.status >= 500 && canDisplayModal) {
-                var errorMessage = response.statusText ? response.statusText : 'openlmis500.serverResponse.error';
-                canDisplayModal = false;
-                $injector.get('alertService').error(errorMessage).then(function() {
-                    canDisplayModal = true;
-                });
+            if (response.status >= 400) {
+                $timeout(function() {
+                    $injector.get('alertService').error(
+                        getTitle(response.statusText),
+                        response.data.error_description || response.data.message || response.data
+                    );
+                }, 200);
             }
+
             return $q.reject(response);
+        }
+
+        function getTitle(statusText) {
+            return statusText ? statusText : 'openlmisServerErrorHandler.serverResponse.error';
         }
     }
 })();
