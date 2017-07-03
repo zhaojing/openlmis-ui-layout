@@ -15,49 +15,102 @@
 
 describe('serverErrorHandler', function() {
 
-    /*var handler, $q, serverErrorModalService;
+    var serverErrorHandler, $timeout, alertService, $rootScope, $q, response;
 
     beforeEach(function() {
         module('openlmis-server-error-handler');
 
-        inject(function(_serverErrorHandler_, $injector, _$q_) {
-            handler = _serverErrorHandler_;
-            $q = _$q_;
-
-            alertMock = jasmine.createSpyObj('alertService', ['error']);
-            spyOn($injector, 'get').andCallFake(function(name) {
-                if (name === 'alertService') return alertMock;
-            });
-            alertMock.error.andCallFake(function() {
-                return $q.when(true);
-            });
+        inject(function($injector) {
+            serverErrorHandler = $injector.get('serverErrorHandler');
+            $timeout = $injector.get('$timeout');
+            $rootScope = $injector.get('$rootScope');
+            alertService = $injector.get('alertService');
+            $q = $injector.get('$q');
         });
+
+        spyOn(alertService, 'error');
+
+        response = {
+            status: 400,
+            data: {}
+        };
     });
 
     it('should show modal with default message on 500 error', function() {
-        var response = {
-                status: 500
-            };
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
 
-        spyOn($q, 'reject').andCallThrough();
-
-        handler.responseError(response);
-
-        expect(alertMock.error).toHaveBeenCalledWith('openlmisServerErrorHandler.serverResponse.error');
-        expect($q.reject).toHaveBeenCalledWith(response);
+        expect(alertService.error).toHaveBeenCalledWith(
+            'openlmisServerErrorHandler.serverResponse.error',
+            {}
+        );
     });
 
     it('should show modal with message from response on 500 error', function() {
-        var response = {
-                status: 500,
-                statusText: 'Server Error!'
-            };
+        response.statusText = 'Server Error!';
 
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
+
+        expect(alertService.error).toHaveBeenCalledWith(
+            'Server Error!',
+            {}
+        );
+    });
+
+    it('should reject promise with server response', function() {
         spyOn($q, 'reject').andCallThrough();
 
-        handler.responseError(response);
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
 
-        expect(alertMock.error).toHaveBeenCalledWith('Server Error!');
         expect($q.reject).toHaveBeenCalledWith(response);
-    });*/
+    });
+
+    it('should show modal with response data message', function() {
+        response.data.message = 'Some message';
+
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
+
+        expect(alertService.error).toHaveBeenCalledWith(
+            'openlmisServerErrorHandler.serverResponse.error',
+            'Some message'
+        );
+    });
+
+    it('should show modal with response data error description', function() {
+        response.data.message = 'Some message';
+        response.data.error_description = 'Some error description';
+
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
+
+        expect(alertService.error).toHaveBeenCalledWith(
+            'openlmisServerErrorHandler.serverResponse.error',
+            'Some error description'
+        );
+    });
+
+    it('should ignore response with status lower than 400', function() {
+        response.status = 399;
+
+        serverErrorHandler.responseError(response);
+
+        expect(alertService.error).not.toHaveBeenCalled();
+        expect(function() {
+            $timeout.flush();
+        }).toThrow();
+    });
+
+    it('should ignore response with status higher than 599', function() {
+        response.status = 601;
+
+        serverErrorHandler.responseError(response);
+
+        expect(alertService.error).not.toHaveBeenCalled();
+        expect(function() {
+            $timeout.flush();
+        }).toThrow();
+    });
 });

@@ -49,7 +49,7 @@
          * @return {Promise}          Rejected promise
          */
         function responseError(response) {
-            if (response.status >= 400) {
+            if (response.status >= 400 && response.status < 600) {
                 $timeout(function() {
                     $injector.get('alertService').error(
                         getTitle(response.statusText),
