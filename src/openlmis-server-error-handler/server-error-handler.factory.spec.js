@@ -42,7 +42,7 @@ describe('serverErrorHandler', function() {
 
         expect(alertService.error).toHaveBeenCalledWith(
             'openlmisServerErrorHandler.serverResponse.error',
-            {}
+            undefined
         );
     });
 
@@ -54,7 +54,7 @@ describe('serverErrorHandler', function() {
 
         expect(alertService.error).toHaveBeenCalledWith(
             'Server Error!',
-            {}
+            undefined
         );
     });
 

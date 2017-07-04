@@ -55,7 +55,7 @@
                 $timeout(function() {
                     $injector.get('alertService').error(
                         getTitle(response.statusText),
-                        response.data.error_description || response.data.message || response.data
+                        getMessage(response.data)
                     );
                 }, 200);
             }
@@ -65,6 +65,12 @@
 
         function getTitle(statusText) {
             return statusText ? statusText : 'openlmisServerErrorHandler.serverResponse.error';
+        }
+
+        function getMessage(data) {
+            if (data) {
+                return data.error_description || data.message;
+            }
         }
     }
 })();
