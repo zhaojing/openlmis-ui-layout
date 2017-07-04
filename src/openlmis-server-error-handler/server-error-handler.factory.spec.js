@@ -103,6 +103,17 @@ describe('serverErrorHandler', function() {
         }).toThrow();
     });
 
+    it('should ignore response with 401 status', function() {
+        response.status = 401;
+
+        serverErrorHandler.responseError(response);
+
+        expect(alertService.error).not.toHaveBeenCalled();
+        expect(function() {
+            $timeout.flush();
+        }).toThrow();
+    });
+
     it('should ignore response with status higher than 599', function() {
         response.status = 601;
 

@@ -21,7 +21,7 @@
      * @module openlmis-server-error-handler
      *
      * @description
-     * Provides handling for HTTP 4xx and 5xx errors.
+     * Provides handling for HTTP 4xx(excluding 401) and 5xx errors.
      */
     angular.module('openlmis-server-error-handler', [
         'openlmis-modal'

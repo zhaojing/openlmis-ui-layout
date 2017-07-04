@@ -22,7 +22,8 @@
      * @ngdoc service
      * @name openlmis-server-error-handler.serverErrorHandler
      *
-     * @description Displays alert modal when server response status has 4XX or 5XX code.
+     * @description Displays alert modal when server response status has 4xx(excluding 401) or 5xx
+     * code.
      */
     angular
         .module('openlmis-server-error-handler')
@@ -43,13 +44,14 @@
          * @name  responseError
          *
          * @description
-         * Takes a failed response with 4XX or 5XX code displays alert modal and reject response.
+         * Takes a failed response with 4xx(excluding 401) or 5xx code displays alert modal and
+         * reject response.
          *
          * @param  {Object}  response HTTP Response
          * @return {Promise}          Rejected promise
          */
         function responseError(response) {
-            if (response.status >= 400 && response.status < 600) {
+            if (response.status >= 400 && response.status < 600 && response.status !== 401) {
                 $timeout(function() {
                     $injector.get('alertService').error(
                         getTitle(response.statusText),
