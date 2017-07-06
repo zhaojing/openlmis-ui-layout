@@ -124,4 +124,16 @@ describe('serverErrorHandler', function() {
             $timeout.flush();
         }).toThrow();
     });
+
+    it('should parse data to object if it is serialized', function() {
+        response.data = '{ "message": "Serialized message" }';
+
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
+
+        expect(alertService.error).toHaveBeenCalledWith(
+            'openlmisServerErrorHandler.serverResponse.error',
+            'Serialized message'
+        );
+    });
 });

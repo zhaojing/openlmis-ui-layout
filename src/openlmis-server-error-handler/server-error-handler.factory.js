@@ -68,8 +68,14 @@
         }
 
         function getMessage(data) {
-            if (data) {
-                return data.error_description || data.message;
+            var dataObject = data;
+
+            if (angular.isString(data)) {
+                dataObject = angular.fromJson(data);
+            }
+
+            if (dataObject) {
+                return dataObject.error_description || dataObject.message;
             }
         }
     }
