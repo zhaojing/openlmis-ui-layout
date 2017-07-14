@@ -70,13 +70,22 @@
         function getMessage(data) {
             var dataObject = data;
 
-            if (angular.isString(data)) {
+            if (isJSON(data)) {
                 dataObject = angular.fromJson(data);
             }
 
             if (dataObject) {
                 return dataObject.error_description || dataObject.message;
             }
+        }
+
+        function isJSON(data) {
+            try {
+                angular.fromJson(data);
+            } catch(e) {
+                return false;
+            }
+            return true;
         }
     }
 })();

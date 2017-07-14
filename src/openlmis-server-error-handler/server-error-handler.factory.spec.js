@@ -136,4 +136,16 @@ describe('serverErrorHandler', function() {
             'Serialized message'
         );
     });
+
+    it('should not throw exception for response that is not HTML', function() {
+        response.data = '<html>Some HTML</html>';
+
+        serverErrorHandler.responseError(response);
+        $timeout.flush();
+
+        expect(alertService.error).toHaveBeenCalledWith(
+            'openlmisServerErrorHandler.serverResponse.error',
+            undefined
+        );
+    });
 });
