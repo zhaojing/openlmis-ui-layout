@@ -137,7 +137,7 @@ describe('serverErrorHandler', function() {
         );
     });
 
-    it('should not throw exception for response that is not HTML', function() {
+    it('should not throw exception for response that is not JSON', function() {
         response.data = '<html>Some HTML</html>';
 
         serverErrorHandler.responseError(response);
