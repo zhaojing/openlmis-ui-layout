@@ -15,11 +15,11 @@ services:
       - auth-ui
       - ui-components
   auth-ui:
-    image: openlmis/auth-ui:5.0.3-SNAPSHOT
+    image: openlmis/auth-ui:5.0.3
     volumes:
       - '/openlmis-auth-ui'
   ui-components:
-    image: openlmis/ui-components:5.1.1-SNAPSHOT
+    image: openlmis/ui-components:5.1.1
     volumes:
       - '/openlmis-ui-components'
   image:

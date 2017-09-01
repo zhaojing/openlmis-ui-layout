@@ -1,5 +1,9 @@
-5.0.2 / Current Snapshot
+5.0.2 / 2017-09-01
 ==================
+
+New features:
+* [OLMIS-2543](https://openlmis.atlassian.net/browse/OLMIS-2543): Added interceptor for displaying
+server errors
 
 5.0.1 / 2017-05-26
 ==================
