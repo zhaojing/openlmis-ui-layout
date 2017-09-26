@@ -36,13 +36,14 @@
         this.isLoading = isLoading;
         this.register = register;
 
-        this.startLoading = startLoading;
-        this.stopLoading = stopLoading;
-
         /**
          * @ngdoc method
          * @methodOf openlmis-loading.loadingService
          * @name isLoading
+         *
+         * @description
+         * Indicates if there are registered promises still resolving in the
+         * loadingService.
          * 
          * @return {Boolean} If the loadingService is loading
          */
@@ -58,55 +59,39 @@
          * @ngdoc method
          * @methodOf openlmis-loading.loadingService
          * @name register
-         * 
-         * @param  {String}  key     String to manage loading promises
-         * @param  {Promise} promise Promise that loadingService is waiting for
-         * @return {Boolean}         If registering the promise was successful
          *
          * @description
          * Starts the loading modal when a promise is registered. The promise
          * will stop when the promise finishes.
+         * 
+         * @param  {String}  key     String to manage loading promises
+         * @param  {Promise} promise Promise that loadingService is waiting for
+         * @return {Boolean}         true if the key and promise are registered
          */
         function register(key, promise) {
-            if(!promise.finally) {
+            if(!promise.finally && typeof(promise.finally) === 'function') {
                 return false;
             }
 
             promises[key] = promise;
-            this.startLoading();
+            startLoading();
             
             promise.finally(function() {
                 delete promises[key];
-                service.stopLoading();
+                stopLoading();
             });
 
             return true;
         }
 
-        /**
-         * @ngdoc method
-         * @methodOf openlmis-loading.loadingService
-         * @name startLoading
-         * 
-         * @description
-         * Fires "openlmis-loading.start" if the loadingService isn't loading.
-         */
         function startLoading() {
-            if(this.isLoading()) {
+            if(service.isLoading()) {
                 $rootScope.$emit('openlmis-loading.start');
             }
         }
 
-        /**
-         * @ngdoc method
-         * @methodOf openlmis-loading.loadingService
-         * @name stopLoading
-         * 
-         * @description
-         * Fires "openlmis-loading.stop" if the loadingService isn't loading.
-         */
         function stopLoading() {
-            if(!this.isLoading()) {
+            if(!service.isLoading()) {
                 $rootScope.$emit('openlmis-loading.stop');
             }
         }
