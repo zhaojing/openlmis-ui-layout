@@ -27,11 +27,18 @@
                 document.body.removeAttribute('class', '');
             }
         </script>
+        <noscript>
+            <style>
+                .loading-view { display: none !important; }
+            </style>
+        </noscript>
     </head>
     <body class="no-js" onLoad="removeNoJS()" >
         <div class="loading-view">@@APPLICATION_LOADING_MESSAGE</div>
         <header class="header" ui-view="header" ng-if="userIsAuthenticated"></header>
         <div ui-view></div>
-        <div class="disabled-js-view">@@JAVASCRIPT_DISABLED_MESSAGE</div>
+        <noscript>
+            <div class="disabled-js-view">@@JAVASCRIPT_DISABLED_MESSAGE</div>
+        </noscript>
     </body>
 </html>
