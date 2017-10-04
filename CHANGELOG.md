@@ -4,6 +4,9 @@
 New features:
 * [OLMIS-2956:](https://openlmis.atlassian.net/browse/OLMIS-2956) Added loadingService with $stateChangeStart interceptor
 
+Improvements:
+* [OLMIS-3303:](https://openlmis.atlassian.net/browse/OLMIS-3303) Added warning for users with Javascript disabled
+
 5.0.2 / 2017-09-01
 ==================
 
