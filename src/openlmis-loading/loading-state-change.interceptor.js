@@ -27,37 +27,42 @@
     angular.module('openlmis-loading')
         .run(registerInterceptor);
 
-    registerInterceptor.$inject = ['$rootScope', '$urlRouter'];
+    registerInterceptor.$inject = ['$rootScope', '$state'];
 
-    function registerInterceptor($rootScope, $urlRouter) {
-        var stopped,
-            needsReload;
+    function registerInterceptor($rootScope, $state) {
+        var stopped;
 
         $rootScope.$on('openlmis-loading.start', onLoadingStart);
-        $rootScope.$on('openlmis-loading.stop', onLoadingStop);
-
-        $rootScope.$on('$stateChangeStart', onStateChangeStart);
 
         function onLoadingStart(event) {
             if(!stopped) {
                 stopped = true;
-                needsReload = undefined;
+                stopStateChangeIfLoading();
             }
         }
 
-        function onLoadingStop() {
-            if(stopped && needsReload) {
-                stopped = undefined;
-                needsReload = undefined;
-                $urlRouter.sync();
-            }
-        }
+        function stopStateChangeIfLoading() {
+            var removeStateChangeListener = $rootScope.$on('$stateChangeStart', onStateChangeStart),
+                removeStopListener = $rootScope.$on('openlmis-loading.stop', onLoadingStop),
+                caughtState,
+                caughtParams;
 
-        function onStateChangeStart(event) {
-            if(stopped) {
+            function onStateChangeStart(event, toState, toParams) {
                 event.preventDefault();
-                needsReload = true;
+                caughtState = toState;
+                caughtParams = toParams;
             }
+
+            function onLoadingStop() {
+                removeStopListener();
+                removeStateChangeListener();
+
+                stopped = undefined;
+
+                if(caughtState) {
+                    $state.go(caughtState, caughtParams);    
+                }
+            };
         }
     }
 

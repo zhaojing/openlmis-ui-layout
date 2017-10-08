@@ -14,15 +14,15 @@
  */
 
 describe('openlmis-loading.interceptor:loadingStateChange', function() {
-    var loadingService, $urlRouter;
+    var loadingService, $state;
 
     beforeEach(module('openlmis-loading'));
 
     beforeEach(inject(function($injector) {
         $rootScope = $injector.get('$rootScope');
 
-        $urlRouter = $injector.get('$urlRouter');
-        spyOn($urlRouter, 'sync');
+        $state = $injector.get('$state');
+        spyOn($state, 'go');
     }));
 
     it('will not stop "$stateChangeStart" if "openlmis-loading.start" is not fired', function() {
@@ -49,32 +49,47 @@ describe('openlmis-loading.interceptor:loadingStateChange', function() {
         $rootScope.$emit('openlmis-loading.stop');
         $rootScope.$apply();
 
-        expect($urlRouter.sync).not.toHaveBeenCalled();
+        expect($state.go).not.toHaveBeenCalled();
     });
 
-    it('reloads the current state when "openlmis-loading.stop" is fired after "openlmis-loading.start" and "$stateChangeStart"', function() {
+    it('loads the next state when "openlmis-loading.stop" is fired after "openlmis-loading.start" and "$stateChangeStart"', function() {
         $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('$stateChangeStart');
+        $rootScope.$emit('$stateChangeStart', 'exampleState');
         $rootScope.$emit('openlmis-loading.stop');
         $rootScope.$apply();
 
-        expect($urlRouter.sync).toHaveBeenCalled();
+        expect($state.go).toHaveBeenCalled();
     });
+
+    it('loads the next state with captured state and state parameters', function() {
+        $rootScope.$emit('openlmis-loading.start');
+        
+        // NOTE: sending 'nextParameters' instead of object because it easier to test
+        $rootScope.$emit('$stateChangeStart', 'nextState', 'nextParameters');
+        
+        $rootScope.$emit('openlmis-loading.stop');
+        $rootScope.$apply();
+
+        expect($state.go).toHaveBeenCalled();
+        expect($state.go.mostRecentCall.args[0]).toBe('nextState');
+        expect($state.go.mostRecentCall.args[1]).toBe('nextParameters');
+    })
 
     it('will reload state only once, regardless of how many times "openlmis-loading.stop" or "openlmis-loading.start" are fired', function() {
         $rootScope.$emit('openlmis-loading.start');
         $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('$stateChangeStart');
-        $rootScope.$emit('$stateChangeStart');
+        $rootScope.$emit('$stateChangeStart', 'exampleState');
+        $rootScope.$emit('$stateChangeStart', 'nextState');
         $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('$stateChangeStart');
+        $rootScope.$emit('$stateChangeStart', 'lastState');
         $rootScope.$apply();
 
         $rootScope.$emit('openlmis-loading.stop');
         $rootScope.$apply();
 
-        expect($urlRouter.sync).toHaveBeenCalled();
-        expect($urlRouter.sync.calls.length).toBe(1);
+        expect($state.go).toHaveBeenCalled();
+        expect($state.go.calls.length).toBe(1);
+        expect($state.go.mostRecentCall.args[0]).toBe('lastState');
     });
 
 });
