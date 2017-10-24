@@ -6,6 +6,7 @@ New features:
 
 Improvements:
 * [OLMIS-3303:](https://openlmis.atlassian.net/browse/OLMIS-3303) Added warning for users with Javascript disabled
+* Updated dev-ui version to 6.
 
 5.0.2 / 2017-09-01
 ==================
