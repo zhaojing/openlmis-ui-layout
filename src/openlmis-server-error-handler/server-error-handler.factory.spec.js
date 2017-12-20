@@ -15,7 +15,7 @@
 
 describe('serverErrorHandler', function() {
 
-    var serverErrorHandler, $timeout, alertService, $rootScope, $q, response;
+    var serverErrorHandler, $timeout, alertService, $q, response;
 
     beforeEach(function() {
         module('openlmis-server-error-handler');
@@ -23,7 +23,6 @@ describe('serverErrorHandler', function() {
         inject(function($injector) {
             serverErrorHandler = $injector.get('serverErrorHandler');
             $timeout = $injector.get('$timeout');
-            $rootScope = $injector.get('$rootScope');
             alertService = $injector.get('alertService');
             $q = $injector.get('$q');
         });

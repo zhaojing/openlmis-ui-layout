@@ -15,7 +15,7 @@
 
 describe('HeaderController', function() {
 
-    var scope, vm, authorizationService, offlineService, user1, user2;
+    var scope, authorizationService, offlineService, user1, user2;
 
     beforeEach(function() {
        module('openlmis-header');
@@ -24,7 +24,7 @@ describe('HeaderController', function() {
            authorizationService = jasmine.createSpyObj('authorizationService', ['getUser', 'isAuthenticated']);
            offlineService = _offlineService_;
            scope = $rootScope.$new();
-           vm = $controller('HeaderController', {
+           $controller('HeaderController', {
                $scope: scope,
                authorizationService: authorizationService,
                offlineService: offlineService

@@ -32,7 +32,7 @@ describe('BreadcrumbsController', function() {
                 label: 'Child'
             },
             'openlmis.parent.child.grandChild': {
-                name: 'openlmis.parent.child.grandChild',
+                name: 'openlmis.parent.child.grandChild'
             },
             'openlmis.otherParent': {
                 name: 'openlmis.otherParent',
