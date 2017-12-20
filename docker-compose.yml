@@ -8,6 +8,7 @@ services:
     working_dir: /app
     volumes:
       - '.:/app'
+    env_file: .env
     volumes_from:
       - auth-ui
       - ui-components
