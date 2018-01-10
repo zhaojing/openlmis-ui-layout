@@ -1,3 +1,9 @@
+5.0.4 / WIP
+===========
+
+New features added in a backwards compatible manner:
+* [OLMIS-3108:](https://openlmis.atlassian.net/browse/OLMIS-3108) Updated to use dev-ui v7 transifex build process
+
 5.0.3 / 2017-11-09
 ======================
 
