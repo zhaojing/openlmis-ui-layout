@@ -26,6 +26,7 @@
     angular.module('openlmis-header', [
         'openlmis-auth',
         'openlmis-offline',
+        'openlmis-app-cache',
         'ui.router'
     ]);
 
