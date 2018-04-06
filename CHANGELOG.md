@@ -1,4 +1,4 @@
-5.0.4 / WIP
+5.1.0 / WIP
 ===========
 
 New features added in a backwards compatible manner:
