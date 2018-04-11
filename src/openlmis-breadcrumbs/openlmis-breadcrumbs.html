@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li ng-repeat="state in breadcrumbs.getStates()">
-        <a ng-if="!state.abstract && !$last" ui-sref="{{state.name}}">{{state.label | message}}</a>
+        <a ng-if="!state.abstract && !$last" ui-sref="{{state.name}}" ui-sref-opts="{reload: true, notify: true}">{{state.label | message}}</a>
         <span ng-if="state.abstract || $last" ng-class="{'active': $last}">{{state.label | message}}</span>
     </li>
 </ol>
