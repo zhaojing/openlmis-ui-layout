@@ -1,4 +1,4 @@
-5.1.0 / 2018-04-24
+5.1.1 / 2018-04-24
 ==================
 
 New features added in a backwards compatible manner:
