@@ -5,6 +5,7 @@ Improvements:
 * [OLMIS-4745](https://openlmis.atlassian.net/browse/OLMIS-4745): Added Jenkinsfile.
 * [OLMIS-4732](https://openlmis.atlassian.net/browse/OLMIS-4732): Added role assignments tables to the User Profile screen.
 * [OLMIS-4795](https://openlmis.atlassian.net/browse/OLMIS-4795): Updated dev-ui to version 8.
+* [OLMIS-4813](https://openlmis.atlassian.net/browse/OLMIS-4813): Updated ui-components to version 6.0.0.
 
 5.1.0 / 2018-04-24
 ==================
