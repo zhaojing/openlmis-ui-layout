@@ -8,5 +8,6 @@
   ],
   "applicationTitle": "OpenLMIS",
   "applicationLoadingMessage": "Starting OpenLMIS",
-  "javascriptDisabledMessage": "JavaScript is disabled within your browser. Please enable it and then reload this page."
+  "javascriptDisabledMessage": "JavaScript is disabled within your browser. Please enable it and then reload this page.",
+  "noLint": true
 }
