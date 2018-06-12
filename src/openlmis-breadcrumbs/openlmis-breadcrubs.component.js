@@ -14,13 +14,13 @@
  */
 (function() {
 
-	'use strict';
+    'use strict';
 
-	angular
-		.module('openlmis-breadcrumbs')
-		.component('openlmisBreadcrumbs', {
-			controller: 'BreadcrumbsController',
-			controllerAs: 'breadcrumbs',
+    angular
+        .module('openlmis-breadcrumbs')
+        .component('openlmisBreadcrumbs', {
+            controller: 'BreadcrumbsController',
+            controllerAs: 'breadcrumbs',
             templateUrl: 'openlmis-breadcrumbs/openlmis-breadcrumbs.html'
-		});
+    });
 })();
