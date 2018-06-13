@@ -48,11 +48,7 @@
          * @return {Boolean} If the loadingService is loading
          */
         function isLoading() {
-            if(Object.keys(promises).length) {
-                return true;
-            } else {
-                return false;
-            }
+            return Object.keys(promises).length ? true : false;
         }
 
         /**
