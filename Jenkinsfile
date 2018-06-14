@@ -56,11 +56,6 @@ pipeline {
             post {
                 success {
                     archive 'build/styleguide/*, build/styleguide/**/*, build/docs/*, build/docs/**/*, build/messages/*'
-                    script {
-                        if (!VERSION.endsWith("SNAPSHOT")) {
-                            currentBuild.rawBuild.keepLog(true)
-                        }
-                    }
                 }
                 failure {
                     slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${env.STAGE_NAME} FAILED (<${env.BUILD_URL}|Open>)"
@@ -118,6 +113,11 @@ pipeline {
                 sh "docker push openlmis/ui-layout:${VERSION}"
             }
             post {
+                success {
+                    script {
+                        currentBuild.rawBuild.keepLog(true)
+                    }
+                }
                 failure {
                     slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${env.STAGE_NAME} FAILED (<${env.BUILD_URL}|Open>)"
                 }
