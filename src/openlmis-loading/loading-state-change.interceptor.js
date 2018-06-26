@@ -60,7 +60,7 @@
                 stopped = undefined;
 
                 if (caughtState) {
-                    $state.go(caughtState, caughtParams);    
+                    $state.go(caughtState, caughtParams);
                 }
             }
         }

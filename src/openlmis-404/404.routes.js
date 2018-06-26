@@ -15,7 +15,7 @@
 
 (function() {
 
-    "use strict";
+    'use strict';
 
     angular.module('openlmis-404').config(routes);
 

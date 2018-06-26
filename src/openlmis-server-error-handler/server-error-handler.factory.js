@@ -13,8 +13,7 @@
  * http://www.gnu.org/licenses.  For additional information contact info@OpenLMIS.org. 
  */
 
-
- (function() {
+(function() {
 
     'use strict';
 
@@ -53,10 +52,8 @@
         function responseError(response) {
             if (response.status >= 400 && response.status < 600 && response.status !== 401) {
                 $timeout(function() {
-                    $injector.get('alertService').error(
-                        getTitle(response.statusText),
-                        getMessage(response.data)
-                    );
+                    $injector.get('alertService').error(getTitle(response.statusText),
+                        getMessage(response.data));
                 }, 200);
             }
 
@@ -82,7 +79,7 @@
         function isJSON(data) {
             try {
                 angular.fromJson(data);
-            } catch(e) {
+            } catch (e) {
                 return false;
             }
             return true;

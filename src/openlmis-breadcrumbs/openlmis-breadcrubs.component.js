@@ -22,5 +22,5 @@
             controller: 'BreadcrumbsController',
             controllerAs: 'breadcrumbs',
             templateUrl: 'openlmis-breadcrumbs/openlmis-breadcrumbs.html'
-    });
+        });
 })();

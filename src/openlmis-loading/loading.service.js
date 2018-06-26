@@ -48,7 +48,7 @@
          * @return {Boolean} If the loadingService is loading
          */
         function isLoading() {
-            return Object.keys(promises).length ? true : false;
+            return Object.keys(promises).length > 0;
         }
 
         /**
@@ -65,13 +65,13 @@
          * @return {Boolean}         true if the key and promise are registered
          */
         function register(key, promise) {
-            if(!promise.finally && typeof(promise.finally) === 'function') {
+            if (!promise.finally && typeof(promise.finally) === 'function') {
                 return false;
             }
 
             promises[key] = promise;
             startLoading();
-            
+
             promise.finally(function() {
                 delete promises[key];
                 stopLoading();
@@ -81,13 +81,13 @@
         }
 
         function startLoading() {
-            if(service.isLoading()) {
+            if (service.isLoading()) {
                 $rootScope.$emit('openlmis-loading.start');
             }
         }
 
         function stopLoading() {
-            if(!service.isLoading()) {
+            if (!service.isLoading()) {
                 $rootScope.$emit('openlmis-loading.stop');
             }
         }

@@ -40,8 +40,8 @@
         });
 
         $urlRouterProvider
-        .when('', '/home')
-        .when('/', '/home');
+            .when('', '/home')
+            .when('/', '/home');
 
     }
 
