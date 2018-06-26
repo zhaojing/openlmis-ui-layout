@@ -34,8 +34,8 @@
 
         $rootScope.$on('openlmis-loading.start', onLoadingStart);
 
-        function onLoadingStart(event) {
-            if(!stopped) {
+        function onLoadingStart() {
+            if (!stopped) {
                 stopped = true;
                 stopStateChangeIfLoading();
             }
@@ -59,10 +59,10 @@
 
                 stopped = undefined;
 
-                if(caughtState) {
+                if (caughtState) {
                     $state.go(caughtState, caughtParams);    
                 }
-            };
+            }
         }
     }
 
