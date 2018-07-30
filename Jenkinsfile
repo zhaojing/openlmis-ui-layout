@@ -149,7 +149,7 @@ pipeline {
                 failure {
                     script {
                         notifyAfterFailure()
-                    }]
+                    }
                 }
             }
         }
