@@ -135,6 +135,7 @@ pipeline {
                 }
             }
             steps {
+                sh "docker pull openlmis/ui-layout:latest"
                 sh "docker tag openlmis/ui-layout:latest openlmis/ui-layout:${VERSION}"
                 sh "docker push openlmis/ui-layout:${VERSION}"
             }
