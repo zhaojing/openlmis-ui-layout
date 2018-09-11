@@ -80,6 +80,7 @@ describe('serverErrorHandler', function() {
 
     it('should show modal with response data error description', function() {
         response.data.message = 'Some message';
+        //eslint-disable-next-line camelcase
         response.data.error_description = 'Some error description';
 
         serverErrorHandler.responseError(response);

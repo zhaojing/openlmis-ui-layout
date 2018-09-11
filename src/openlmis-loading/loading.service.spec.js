@@ -14,15 +14,18 @@
  */
 
 describe('openlmis-loading:loadingService', function() {
-    var loadingService, $q;
 
-    beforeEach(module('openlmis-loading'));
+    var loadingService, $q, $rootScope;
 
-    beforeEach(inject(function($injector) {
-        loadingService = $injector.get('loadingService');
-        $q = $injector.get('$q');
-        $rootScope = $injector.get('$rootScope');
-    }));
+    beforeEach(function() {
+        module('openlmis-loading');
+
+        inject(function($injector) {
+            loadingService = $injector.get('loadingService');
+            $q = $injector.get('$q');
+            $rootScope = $injector.get('$rootScope');
+        });
+    });
 
     it('isLoading will return false by default', function() {
         expect(loadingService.isLoading()).toBe(false);
@@ -39,7 +42,7 @@ describe('openlmis-loading:loadingService', function() {
         var deferred = $q.defer();
         loadingService.register('example', deferred.promise);
         $rootScope.$apply();
-        
+
         expect(loadingService.isLoading()).toBe(true);
 
         deferred.resolve();
@@ -124,7 +127,7 @@ describe('openlmis-loading:loadingService', function() {
         loadingService.register('example', $q.reject());
         $rootScope.$apply();
 
-        expect(eventSpy).toHaveBeenCalled();    
+        expect(eventSpy).toHaveBeenCalled();
     });
 
 });

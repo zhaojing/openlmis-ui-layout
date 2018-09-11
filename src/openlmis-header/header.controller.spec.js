@@ -18,31 +18,33 @@ describe('HeaderController', function() {
     var scope, authorizationService, offlineService, user1, user2;
 
     beforeEach(function() {
-       module('openlmis-header');
+        module('openlmis-header');
 
-       inject(function($controller, $rootScope, _authorizationService_, _offlineService_) {
-           authorizationService = jasmine.createSpyObj('authorizationService', ['getUser', 'isAuthenticated']);
-           offlineService = _offlineService_;
-           scope = $rootScope.$new();
-           $controller('HeaderController', {
-               $scope: scope,
-               authorizationService: authorizationService,
-               offlineService: offlineService
-           });
-       });
+        inject(function($controller, $rootScope, _authorizationService_, _offlineService_) {
+            authorizationService = jasmine.createSpyObj('authorizationService', ['getUser', 'isAuthenticated']);
+            offlineService = _offlineService_;
+            scope = $rootScope.$new();
+            $controller('HeaderController', {
+                $scope: scope,
+                authorizationService: authorizationService,
+                offlineService: offlineService
+            });
+        });
 
-       user1 = {
-           user_id: '1',
-           username: 'user1'
-       };
-       user2 = {
-           user_id: '2',
-           username: 'user2'
-       };
+        user1 = {
+            //eslint-disable-next-line camelcase
+            user_id: '1',
+            username: 'user1'
+        };
+        user2 = {
+            //eslint-disable-next-line camelcase
+            user_id: '2',
+            username: 'user2'
+        };
 
-       authorizationService.isAuthenticated.andReturn(true);
-       authorizationService.getUser.andReturn(user1);
-       scope.$apply();
+        authorizationService.isAuthenticated.andReturn(true);
+        authorizationService.getUser.andReturn(user1);
+        scope.$apply();
     });
 
     describe('watch', function() {
@@ -58,7 +60,7 @@ describe('HeaderController', function() {
 
             expect(scope.user).toBe(user2.username);
             expect(scope.userId).toBe(user2.user_id);
-        })
+        });
 
     });
 
