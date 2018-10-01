@@ -1,3 +1,9 @@
+5.1.2 / WIP
+===========
+
+Improvements:
+* [OLMIS-3696](https://openlmis.atlassian.net/browse/OLMIS-3696): Added dependency and development dependency locking.
+
 5.1.1 / 2018-08-16
 ==================
 
