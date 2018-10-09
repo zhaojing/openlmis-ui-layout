@@ -1,0 +1,13 @@
+.flex-page {
+    @extend .page;
+
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    >div {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+}

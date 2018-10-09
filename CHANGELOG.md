@@ -3,6 +3,7 @@
 
 Improvements:
 * [OLMIS-3696](https://openlmis.atlassian.net/browse/OLMIS-3696): Added dependency and development dependency locking.
+* [OLMIS-5500](https://openlmis.atlassian.net/browse/OLMIS-5500): Added template for a flex page.
 
 5.1.1 / 2018-08-16
 ==================
