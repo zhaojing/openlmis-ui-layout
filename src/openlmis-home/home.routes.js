@@ -36,6 +36,11 @@
                 '@': {
                     templateUrl: 'openlmis-home/home.html'
                 }
+            },
+            resolve: {
+                states: function(navigationStateService) {
+                    return navigationStateService.updateStateAvailability();
+                }
             }
         });
 
