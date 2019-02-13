@@ -17,7 +17,8 @@
     'use strict';
 
     angular.module('openlmis-main-state', [
-        'ui.router'
+        'ui.router',
+        'openlmis-navigation'
     ]);
 
 })();
