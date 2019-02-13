@@ -34,6 +34,11 @@
                 header: {
                     templateUrl: 'openlmis-main-state/header.html'
                 }
+            },
+            resolve: {
+                states: function(navigationStateService) {
+                    return navigationStateService.updateStateAvailability();
+                }
             }
         });
 
