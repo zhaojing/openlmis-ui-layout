@@ -37,7 +37,7 @@
             },
             resolve: {
                 states: function(navigationStateService) {
-                    return navigationStateService.updateStateAvailability();
+                    return navigationStateService.setUpStatesAvailability();
                 }
             }
         });
