@@ -15,135 +15,133 @@
 
 describe('serverErrorHandler', function() {
 
-    var serverErrorHandler, $timeout, alertService, $q, response;
-
     beforeEach(function() {
         module('openlmis-server-error-handler');
 
         inject(function($injector) {
-            serverErrorHandler = $injector.get('serverErrorHandler');
-            $timeout = $injector.get('$timeout');
-            alertService = $injector.get('alertService');
-            $q = $injector.get('$q');
+            this.serverErrorHandler = $injector.get('serverErrorHandler');
+            this.$timeout = $injector.get('$timeout');
+            this.alertService = $injector.get('alertService');
+            this.$q = $injector.get('$q');
         });
 
-        spyOn(alertService, 'error');
+        spyOn(this.alertService, 'error');
 
-        response = {
+        this.response = {
             status: 400,
             data: {}
         };
     });
 
     it('should show modal with default message on 500 error', function() {
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect(alertService.error).toHaveBeenCalledWith(
+        expect(this.alertService.error).toHaveBeenCalledWith(
             'openlmisServerErrorHandler.serverResponse.error',
             undefined
         );
     });
 
     it('should show modal with message from response on 500 error', function() {
-        response.statusText = 'Server Error!';
+        this.response.statusText = 'Server Error!';
 
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect(alertService.error).toHaveBeenCalledWith(
+        expect(this.alertService.error).toHaveBeenCalledWith(
             'Server Error!',
             undefined
         );
     });
 
     it('should reject promise with server response', function() {
-        spyOn($q, 'reject').andCallThrough();
+        spyOn(this.$q, 'reject').andCallThrough();
 
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect($q.reject).toHaveBeenCalledWith(response);
+        expect(this.$q.reject).toHaveBeenCalledWith(this.response);
     });
 
     it('should show modal with response data message', function() {
-        response.data.message = 'Some message';
+        this.response.data.message = 'Some message';
 
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect(alertService.error).toHaveBeenCalledWith(
+        expect(this.alertService.error).toHaveBeenCalledWith(
             'openlmisServerErrorHandler.serverResponse.error',
             'Some message'
         );
     });
 
     it('should show modal with response data error description', function() {
-        response.data.message = 'Some message';
+        this.response.data.message = 'Some message';
         //eslint-disable-next-line camelcase
-        response.data.error_description = 'Some error description';
+        this.response.data.error_description = 'Some error description';
 
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect(alertService.error).toHaveBeenCalledWith(
+        expect(this.alertService.error).toHaveBeenCalledWith(
             'openlmisServerErrorHandler.serverResponse.error',
             'Some error description'
         );
     });
 
     it('should ignore response with status lower than 400', function() {
-        response.status = 399;
+        this.response.status = 399;
 
-        serverErrorHandler.responseError(response);
+        this.serverErrorHandler.responseError(this.response);
 
-        expect(alertService.error).not.toHaveBeenCalled();
+        expect(this.alertService.error).not.toHaveBeenCalled();
         expect(function() {
-            $timeout.flush();
+            this.$timeout.flush();
         }).toThrow();
     });
 
     it('should ignore response with 401 status', function() {
-        response.status = 401;
+        this.response.status = 401;
 
-        serverErrorHandler.responseError(response);
+        this.serverErrorHandler.responseError(this.response);
 
-        expect(alertService.error).not.toHaveBeenCalled();
+        expect(this.alertService.error).not.toHaveBeenCalled();
         expect(function() {
-            $timeout.flush();
+            this.$timeout.flush();
         }).toThrow();
     });
 
     it('should ignore response with status higher than 599', function() {
-        response.status = 601;
+        this.response.status = 601;
 
-        serverErrorHandler.responseError(response);
+        this.serverErrorHandler.responseError(this.response);
 
-        expect(alertService.error).not.toHaveBeenCalled();
+        expect(this.alertService.error).not.toHaveBeenCalled();
         expect(function() {
-            $timeout.flush();
+            this.$timeout.flush();
         }).toThrow();
     });
 
     it('should parse data to object if it is serialized', function() {
-        response.data = '{ "message": "Serialized message" }';
+        this.response.data = '{ "message": "Serialized message" }';
 
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect(alertService.error).toHaveBeenCalledWith(
+        expect(this.alertService.error).toHaveBeenCalledWith(
             'openlmisServerErrorHandler.serverResponse.error',
             'Serialized message'
         );
     });
 
     it('should not throw exception for response that is not JSON', function() {
-        response.data = '<html>Some HTML</html>';
+        this.response.data = '<html>Some HTML</html>';
 
-        serverErrorHandler.responseError(response);
-        $timeout.flush();
+        this.serverErrorHandler.responseError(this.response);
+        this.$timeout.flush();
 
-        expect(alertService.error).toHaveBeenCalledWith(
+        expect(this.alertService.error).toHaveBeenCalledWith(
             'openlmisServerErrorHandler.serverResponse.error',
             undefined
         );

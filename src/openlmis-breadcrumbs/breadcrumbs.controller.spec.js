@@ -14,12 +14,15 @@
  */
 describe('BreadcrumbsController', function() {
 
-    var vm, $state, states;
-
     beforeEach(function() {
         module('openlmis-breadcrumbs');
 
-        states = {
+        inject(function($injector) {
+            this.$state = $injector.get('$state');
+            this.$controller = $injector.get('$controller');
+        });
+
+        this.states = {
             openlmis: {
                 name: 'openlmis'
             },
@@ -44,48 +47,45 @@ describe('BreadcrumbsController', function() {
             }
         };
 
-        $state = jasmine.createSpyObj('$state', ['get']);
-        $state.get.andCallFake(function(name) {
-            return states[name];
-        });
-        $state.$current = {
+        this.$state.$current = {
             includes: {
-                openlmis: states.openlmis,
-                'openlmis.parent': states['openlmis.parent'],
-                'openlmis.parent.child': states['openlmis.parent.child'],
-                'openlmis.parent.child.grandChild': states['openlmis.parent.child.grandChild']
+                openlmis: this.states.openlmis,
+                'openlmis.parent': this.states['openlmis.parent'],
+                'openlmis.parent.child': this.states['openlmis.parent.child'],
+                'openlmis.parent.child.grandChild': this.states['openlmis.parent.child.grandChild']
             }
         };
 
-        inject(function($injector) {
-            vm = $injector.get('$controller')('BreadcrumbsController', {
-                $state: $state
-            });
+        var states = this.states;
+        spyOn(this.$state, 'get').andCallFake(function(name) {
+            return states[name];
         });
+
+        this.vm = this.$controller('BreadcrumbsController');
     });
 
     describe('getStates', function() {
 
         it('should return a list of states', function() {
-            var result = vm.getStates();
+            var result = this.vm.getStates();
 
             expect(result).toEqual([
-                states['openlmis.home'],
-                states['openlmis.parent'],
-                states['openlmis.parent.child']
+                this.states['openlmis.home'],
+                this.states['openlmis.parent'],
+                this.states['openlmis.parent.child']
             ]);
         });
 
         it('should ignore state not in the path', function() {
-            var result = vm.getStates();
+            var result = this.vm.getStates();
 
-            expect(result.indexOf(states['openlmis.otherParent'])).toBe(-1);
+            expect(result.indexOf(this.states['openlmis.otherParent'])).toBe(-1);
         });
 
         it('should ignore states without label', function() {
-            var result = vm.getStates();
+            var result = this.vm.getStates();
 
-            expect(result.indexOf(states['opelmis.parent.child.grandChild'])).toBe(-1);
+            expect(result.indexOf(this.states['opelmis.parent.child.grandChild'])).toBe(-1);
         });
 
     });

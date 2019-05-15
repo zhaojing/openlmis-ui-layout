@@ -15,51 +15,52 @@
 
 describe('HeaderController', function() {
 
-    var scope, authorizationService, offlineService, user1, user2;
-
     beforeEach(function() {
         module('openlmis-header');
 
-        inject(function($controller, $rootScope, _authorizationService_, _offlineService_) {
-            authorizationService = jasmine.createSpyObj('authorizationService', ['getUser', 'isAuthenticated']);
-            offlineService = _offlineService_;
-            scope = $rootScope.$new();
-            $controller('HeaderController', {
-                $scope: scope,
-                authorizationService: authorizationService,
-                offlineService: offlineService
-            });
+        inject(function($injector) {
+            this.$controller = $injector.get('$controller');
+            this.$rootScope = $injector.get('$rootScope');
+            this.authorizationService = $injector.get('authorizationService');
+            this.offlineService = $injector.get('offlineService');
         });
 
-        user1 = {
+        this.$scope = this.$rootScope.$new();
+
+        this.user1 = {
             //eslint-disable-next-line camelcase
             user_id: '1',
             username: 'user1'
         };
-        user2 = {
+
+        this.user2 = {
             //eslint-disable-next-line camelcase
             user_id: '2',
             username: 'user2'
         };
 
-        authorizationService.isAuthenticated.andReturn(true);
-        authorizationService.getUser.andReturn(user1);
-        scope.$apply();
+        spyOn(this.authorizationService, 'isAuthenticated').andReturn(true);
+        spyOn(this.authorizationService, 'getUser').andReturn(this.user1);
+
+        this.$controller('HeaderController', {
+            $scope: this.$scope
+        });
+        this.$scope.$apply();
     });
 
     describe('watch', function() {
 
         it('should set user information', function() {
-            expect(scope.user).toBe(user1.username);
-            expect(scope.userId).toBe(user1.user_id);
+            expect(this.$scope.user).toBe(this.user1.username);
+            expect(this.$scope.userId).toBe(this.user1.user_id);
         });
 
         it('should update user information', function() {
-            authorizationService.getUser.andReturn(user2);
-            scope.$apply();
+            this.authorizationService.getUser.andReturn(this.user2);
+            this.$scope.$apply();
 
-            expect(scope.user).toBe(user2.username);
-            expect(scope.userId).toBe(user2.user_id);
+            expect(this.$scope.user).toBe(this.user2.username);
+            expect(this.$scope.userId).toBe(this.user2.user_id);
         });
 
     });

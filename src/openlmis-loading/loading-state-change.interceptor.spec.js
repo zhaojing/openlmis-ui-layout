@@ -15,24 +15,22 @@
 
 describe('openlmis-loading.interceptor:loadingStateChange', function() {
 
-    var $state, $rootScope;
-
     beforeEach(function() {
         module('openlmis-loading');
 
         inject(function($injector) {
-            $rootScope = $injector.get('$rootScope');
-
-            $state = $injector.get('$state');
-            spyOn($state, 'go');
+            this.$rootScope = $injector.get('$rootScope');
+            this.$state = $injector.get('$state');
         });
+
+        spyOn(this.$state, 'go');
     });
 
     it('will not stop "$stateChangeStart" if "openlmis-loading.start" is not fired', function() {
         var event;
 
-        event = $rootScope.$emit('$stateChangeStart');
-        $rootScope.$apply();
+        event = this.$rootScope.$emit('$stateChangeStart');
+        this.$rootScope.$apply();
 
         expect(event.defaultPrevented).toBe(false);
     });
@@ -40,61 +38,61 @@ describe('openlmis-loading.interceptor:loadingStateChange', function() {
     it('prevents default when "openlmis-loading.start" fired before "$stateChangeStart"', function() {
         var event;
 
-        $rootScope.$emit('openlmis-loading.start');
-        event = $rootScope.$emit('$stateChangeStart');
-        $rootScope.$apply();
+        this.$rootScope.$emit('openlmis-loading.start');
+        event = this.$rootScope.$emit('$stateChangeStart');
+        this.$rootScope.$apply();
 
         expect(event.defaultPrevented).toBe(true);
     });
 
     it('does not reload the current state if "$stateChangeStart" not fired', function() {
-        $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('openlmis-loading.stop');
-        $rootScope.$apply();
+        this.$rootScope.$emit('openlmis-loading.start');
+        this.$rootScope.$emit('openlmis-loading.stop');
+        this.$rootScope.$apply();
 
-        expect($state.go).not.toHaveBeenCalled();
+        expect(this.$state.go).not.toHaveBeenCalled();
     });
 
     it('loads the next state when "openlmis-loading.stop" is fired after "openlmis-loading.start" and' +
         '"$stateChangeStart"', function() {
-        $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('$stateChangeStart', 'exampleState');
-        $rootScope.$emit('openlmis-loading.stop');
-        $rootScope.$apply();
+        this.$rootScope.$emit('openlmis-loading.start');
+        this.$rootScope.$emit('$stateChangeStart', 'exampleState');
+        this.$rootScope.$emit('openlmis-loading.stop');
+        this.$rootScope.$apply();
 
-        expect($state.go).toHaveBeenCalled();
+        expect(this.$state.go).toHaveBeenCalled();
     });
 
     it('loads the next state with captured state and state parameters', function() {
-        $rootScope.$emit('openlmis-loading.start');
+        this.$rootScope.$emit('openlmis-loading.start');
 
         // NOTE: sending 'nextParameters' instead of object because it easier to test
-        $rootScope.$emit('$stateChangeStart', 'nextState', 'nextParameters');
+        this.$rootScope.$emit('$stateChangeStart', 'nextState', 'nextParameters');
 
-        $rootScope.$emit('openlmis-loading.stop');
-        $rootScope.$apply();
+        this.$rootScope.$emit('openlmis-loading.stop');
+        this.$rootScope.$apply();
 
-        expect($state.go).toHaveBeenCalled();
-        expect($state.go.mostRecentCall.args[0]).toBe('nextState');
-        expect($state.go.mostRecentCall.args[1]).toBe('nextParameters');
+        expect(this.$state.go).toHaveBeenCalled();
+        expect(this.$state.go.mostRecentCall.args[0]).toBe('nextState');
+        expect(this.$state.go.mostRecentCall.args[1]).toBe('nextParameters');
     });
 
     it('will reload state only once, regardless of how many times "openlmis-loading.stop" or "openlmis-loading.start"' +
         'are fired', function() {
-        $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('$stateChangeStart', 'exampleState');
-        $rootScope.$emit('$stateChangeStart', 'nextState');
-        $rootScope.$emit('openlmis-loading.start');
-        $rootScope.$emit('$stateChangeStart', 'lastState');
-        $rootScope.$apply();
+        this.$rootScope.$emit('openlmis-loading.start');
+        this.$rootScope.$emit('openlmis-loading.start');
+        this.$rootScope.$emit('$stateChangeStart', 'exampleState');
+        this.$rootScope.$emit('$stateChangeStart', 'nextState');
+        this.$rootScope.$emit('openlmis-loading.start');
+        this.$rootScope.$emit('$stateChangeStart', 'lastState');
+        this.$rootScope.$apply();
 
-        $rootScope.$emit('openlmis-loading.stop');
-        $rootScope.$apply();
+        this.$rootScope.$emit('openlmis-loading.stop');
+        this.$rootScope.$apply();
 
-        expect($state.go).toHaveBeenCalled();
-        expect($state.go.calls.length).toBe(1);
-        expect($state.go.mostRecentCall.args[0]).toBe('lastState');
+        expect(this.$state.go).toHaveBeenCalled();
+        expect(this.$state.go.calls.length).toBe(1);
+        expect(this.$state.go.mostRecentCall.args[0]).toBe('lastState');
     });
 
 });

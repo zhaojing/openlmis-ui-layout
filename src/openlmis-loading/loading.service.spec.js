@@ -15,117 +15,115 @@
 
 describe('openlmis-loading:loadingService', function() {
 
-    var loadingService, $q, $rootScope;
-
     beforeEach(function() {
         module('openlmis-loading');
 
         inject(function($injector) {
-            loadingService = $injector.get('loadingService');
-            $q = $injector.get('$q');
-            $rootScope = $injector.get('$rootScope');
+            this.loadingService = $injector.get('loadingService');
+            this.$q = $injector.get('$q');
+            this.$rootScope = $injector.get('$rootScope');
         });
     });
 
     it('isLoading will return false by default', function() {
-        expect(loadingService.isLoading()).toBe(false);
+        expect(this.loadingService.isLoading()).toBe(false);
     });
 
     it('isLoading will return true if a promise has been registered', function() {
-        loadingService.register('example', $q.defer().promise);
-        $rootScope.$apply();
+        this.loadingService.register('example', this.$q.defer().promise);
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(true);
+        expect(this.loadingService.isLoading()).toBe(true);
     });
 
     it('isLoading will be false after registered promise is resolved', function() {
-        var deferred = $q.defer();
-        loadingService.register('example', deferred.promise);
-        $rootScope.$apply();
+        var deferred = this.$q.defer();
+        this.loadingService.register('example', deferred.promise);
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(true);
+        expect(this.loadingService.isLoading()).toBe(true);
 
         deferred.resolve();
-        $rootScope.$apply();
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(false);
+        expect(this.loadingService.isLoading()).toBe(false);
     });
 
     it('isLoading will be false after registered promise is rejected', function() {
-        var deferred = $q.defer();
-        loadingService.register('example', deferred.promise);
-        $rootScope.$apply();
+        var deferred = this.$q.defer();
+        this.loadingService.register('example', deferred.promise);
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(true);
+        expect(this.loadingService.isLoading()).toBe(true);
 
         deferred.reject();
-        $rootScope.$apply();
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(false);
+        expect(this.loadingService.isLoading()).toBe(false);
     });
 
     it('isLoading will be false until all registered promises finish', function() {
-        var deferred = $q.defer(),
-            otherDeferred = $q.defer();
+        var deferred = this.$q.defer(),
+            otherDeferred = this.$q.defer();
 
-        loadingService.register('example', deferred.promise);
-        loadingService.register('otherExample', otherDeferred.promise);
-        $rootScope.$apply();
+        this.loadingService.register('example', deferred.promise);
+        this.loadingService.register('otherExample', otherDeferred.promise);
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(true);
+        expect(this.loadingService.isLoading()).toBe(true);
 
         deferred.resolve();
-        $rootScope.$apply();
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(true);
+        expect(this.loadingService.isLoading()).toBe(true);
 
         otherDeferred.reject();
-        $rootScope.$apply();
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(false);
+        expect(this.loadingService.isLoading()).toBe(false);
     });
 
     it('fires "openlmisLoading.start" the first promise is registered', function() {
         var eventSpy = jasmine.createSpy();
 
-        $rootScope.$on('openlmis-loading.start', eventSpy);
+        this.$rootScope.$on('openlmis-loading.start', eventSpy);
 
-        loadingService.register('example', $q.defer().promise);
-        $rootScope.$apply();
+        this.loadingService.register('example', this.$q.defer().promise);
+        this.$rootScope.$apply();
 
         expect(eventSpy).toHaveBeenCalled();
     });
 
     it('fires "openlmisLoading.stop" when the last promise is finished', function() {
         var eventSpy = jasmine.createSpy(),
-            deferred = $q.defer(),
-            otherDeferred = $q.defer();
+            deferred = this.$q.defer(),
+            otherDeferred = this.$q.defer();
 
-        $rootScope.$on('openlmis-loading.stop', eventSpy);
+        this.$rootScope.$on('openlmis-loading.stop', eventSpy);
 
-        loadingService.register('example', deferred.promise);
-        loadingService.register('otherExample', otherDeferred.promise);
-        $rootScope.$apply();
+        this.loadingService.register('example', deferred.promise);
+        this.loadingService.register('otherExample', otherDeferred.promise);
+        this.$rootScope.$apply();
 
         deferred.resolve();
-        $rootScope.$apply();
+        this.$rootScope.$apply();
 
         expect(eventSpy).not.toHaveBeenCalled();
 
         otherDeferred.resolve();
-        $rootScope.$apply();
+        this.$rootScope.$apply();
 
-        expect(loadingService.isLoading()).toBe(false);
+        expect(this.loadingService.isLoading()).toBe(false);
         expect(eventSpy).toHaveBeenCalled();
     });
 
     it('will fire "openlmisLoading.stop" if an already finished promise is registered', function() {
         var eventSpy = jasmine.createSpy();
 
-        $rootScope.$on('openlmis-loading.stop', eventSpy);
+        this.$rootScope.$on('openlmis-loading.stop', eventSpy);
 
-        loadingService.register('example', $q.reject());
-        $rootScope.$apply();
+        this.loadingService.register('example', this.$q.reject());
+        this.$rootScope.$apply();
 
         expect(eventSpy).toHaveBeenCalled();
     });
