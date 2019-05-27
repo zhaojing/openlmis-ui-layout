@@ -1,3 +1,9 @@
+5.1.3 / 2019-05-27
+==================
+
+Bug fixes:
+* [OLMIS-5665](https://openlmis.atlassian.net/browse/OLMIS-5665): Added no-translate to disable Google translations.
+
 5.1.2 / 2018-12-12
 ==================
 
