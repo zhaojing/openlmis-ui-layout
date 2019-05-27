@@ -1,12 +1,15 @@
+5.1.3 / 2018-05-27
+==================
+
+Bug fixes:
+* [OLMIS-5665](https://openlmis.atlassian.net/browse/OLMIS-5665): Added no-translate to disable Google translations.
+
 5.1.2 / 2018-12-12
 ==================
 
 Improvements:
 * [OLMIS-3696](https://openlmis.atlassian.net/browse/OLMIS-3696): Added dependency and development dependency locking.
 * [OLMIS-5500](https://openlmis.atlassian.net/browse/OLMIS-5500): Added template for a flex page.
-
-Bug fixes:
-* [OLMIS-5665](https://openlmis.atlassian.net/browse/OLMIS-5665): Added no-translate to disable Google translations.
 
 5.1.1 / 2018-08-16
 ==================
