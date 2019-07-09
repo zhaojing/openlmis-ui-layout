@@ -3,6 +3,7 @@
 
 Bug fixes:
 * [OLMIS-5665](https://openlmis.atlassian.net/browse/OLMIS-5665): Added no-translate to disable Google translations.
+* [OLMIS-6330](https://openlmis.atlassian.net/browse/OLMIS-6330): fixed trigerring reference-ui build.
 
 5.1.2 / 2018-12-12
 ==================
