@@ -1,3 +1,11 @@
+5.1.4 / 2019-10-17
+==================
+
+Improvements:
+* Updated dev-ui version to 9.0.1.
+* Updated ui-components version to 7.2.0.
+* Updated auth-ui version to 6.2.1.
+
 5.1.3 / 2019-05-27
 ==================
 
