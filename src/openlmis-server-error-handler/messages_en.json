@@ -1,3 +1,3 @@
 {
-    "openlmisServerErrorHandler.serverResponse.error": "There was an error with this request, please contact the server administrator."
+    "openlmisServerErrorHandler.serverResponse.error": "请求发生错误，请联系管理员。"
 }

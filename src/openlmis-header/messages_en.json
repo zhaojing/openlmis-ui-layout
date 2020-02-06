@@ -1,7 +1,7 @@
 {
-    "openlmisHeader.appHeader": "Logistics Management Information System",
-    "openlmisHeader.checkConnection": "Check connection",
-    "openlmisHeader.help": "Help",
-    "openlmisHeader.loggedAs": "Logged in as",
-    "openlmisHeader.youAreOffline": "You are offline"
+    "openlmisHeader.appHeader": "物流管理信息系统",
+    "openlmisHeader.checkConnection": "检查连接",
+    "openlmisHeader.help": "帮助",
+    "openlmisHeader.loggedAs": "登录名",
+    "openlmisHeader.youAreOffline": "您已离线"
 }
